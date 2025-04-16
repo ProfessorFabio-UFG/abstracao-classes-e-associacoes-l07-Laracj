@@ -1,0 +1,114 @@
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Musica[] musica = new Musica[5];
+
+        musica[0] = new Musica("We are never getting back together", "Pop", 2012);
+        musica[0].adicionarCompositor("Taylor Swift", "Americana");
+        musica[1] = new Musica("Tenta acreditar", "MPB", 2021);
+        musica[1].adicionarCompositor("Ana Vitoria", "Brasileiras");
+
+        int num = 2;
+
+        boolean loop = true;
+        while (loop) {
+            System.out.println("\nEscolha uma das opções:" +
+                    "\n(1) Cadastrar musica" +
+                    "\n(2) Ver cadastro de musica" +
+                    "\n(3) Excluir musica" +
+                    "\n(4) Sair");
+
+            int opcao = sc.nextInt();
+            sc.nextLine();
+            switch (opcao) {
+                case 1:
+                    if (num < musica.length) {
+                        System.out.println("Cadastrando Musica:");
+                        System.out.println("Nome da musica:");
+                        String nome = sc.nextLine();
+
+                        boolean musicaExistente = false;
+                        for (int i = 0; i < num; i++) {
+                            if (musica[i].getNome().equalsIgnoreCase(nome)) {
+                                musicaExistente = true;
+                                break;
+                            }
+                        }
+
+                        if (musicaExistente) {
+                            System.out.println("Essa música já está cadastrada.");
+                        } else {
+                            System.out.println("Genero:");
+                            String genero = sc.nextLine();
+                            System.out.println("Ano:");
+                            int ano = sc.nextInt();
+                            System.out.println("Numero de compositores:");
+                            int numCompositores = sc.nextInt();
+                            sc.nextLine();
+
+                            musica[num] = new Musica(nome, genero, ano);
+
+                            for (int i = 0; i < numCompositores; i++) {
+                                System.out.println("Nome do compositor:");
+                                String nomeCompositor = sc.nextLine();
+                                System.out.println("Nacionalidade:");
+                                String nacionalidade = sc.nextLine();
+                                musica[num].adicionarCompositor(nomeCompositor, nacionalidade);
+                            }
+                            num++;
+                            System.out.println("Música cadastrada com sucesso!");
+                        }
+                    } else {
+                        System.out.println("Não é possível cadastrar mais músicas, o limite foi atingido.");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Ver cadastro de musica");
+                    System.out.println("Digite o nome da música:");
+                    String nome = sc.nextLine();
+                    boolean musicaEncontrada = false;
+                    for (int i = 0; i < musica.length; i++) {
+                        if (musica[i] != null && musica[i].getNome().equalsIgnoreCase(nome)) {
+                            System.out.println(musica[i].toString());
+                            musicaEncontrada = true;
+                            break;
+                        }
+                    }
+                    if (!musicaEncontrada) {
+                        System.out.println("Música não encontrada.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Excluir música");
+                    System.out.println("Digite o nome da música que deseja excluir:");
+                    String nomeExcluir = sc.nextLine();
+                    boolean musicaExcluida = false;
+                    for (int i = 0; i < musica.length; i++) {
+                        if (musica[i] != null && musica[i].getNome().equalsIgnoreCase(nomeExcluir)) {
+                            musica[i] = null;
+                            musicaExcluida = true;
+                            System.out.println("Música excluída com sucesso!");
+                            break;
+                        }
+                    }
+                    if (!musicaExcluida) {
+                        System.out.println("Música não encontrada para exclusão.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Saindo...");
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida, tente novamente.");
+                    break;
+            }
+        }
+
+        sc.close();
+    }
+}
