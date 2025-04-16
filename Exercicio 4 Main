@@ -1,0 +1,129 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Empregado[] empregados = new Empregado[20];
+        Empresa[] empresas = new Empresa[10];
+
+        Endereco enderecoEmpresa1 = new Endereco("Avenida 01", "Setor Bueno", "Bloco 2, Apto 1101", "Goiania", "GO", 62);
+        empresas[0] = new Empresa("12.965.0001-78", "Apple", enderecoEmpresa1);
+
+        Endereco enderecoEmpregado1 = new Endereco("Rua 455", "Jardim das Florença", "Casa 1324", "Belo Horizonte", "MG", 21);
+        empregados[0] = new Empregado("Bruno De Paulo", 1023, enderecoEmpregado1, empresas[0]);
+
+        boolean loop = true;
+        int contadorEmpregado = 1, contadorEmpresa = 1;
+
+        while (loop) {
+
+            System.out.println("\nMenu de Opções:" +
+                    "\n(1) Cadastrar nova empresa" +
+                    "\n(2) Cadastrar novos empregados em uma empresa" +
+                    "\n(3) Exibir empresas cadastradas" +
+                    "\n(4) Exibir empregados cadastrados" +
+                    "\n(5) Sair");
+
+            int opcao = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Cadastro de nova empresa:");
+                    System.out.println("Nome da empresa:");
+                    String nomeEmpresa = sc.nextLine();
+                    System.out.println("CNPJ:");
+                    String cnpj = sc.nextLine();
+                    System.out.println("Endereço Empresarial");
+                    System.out.println("Rua:");
+                    String ruaEmp = sc.nextLine();
+                    System.out.println("Bairro:");
+                    String bairroEmp = sc.nextLine();
+                    System.out.println("Complemento:");
+                    String complementoEmp = sc.nextLine();
+                    System.out.println("Número:");
+                    int numeroEmp = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Cidade:");
+                    String cidadeEmp = sc.nextLine();
+                    System.out.println("Estado:");
+                    String estadoEmp = sc.nextLine();
+
+                    empresas[contadorEmpresa] = new Empresa(cnpj, nomeEmpresa, new Endereco(ruaEmp, bairroEmp, complementoEmp, cidadeEmp, estadoEmp, numeroEmp));
+                    contadorEmpresa++;
+                    break;
+
+                case 2:
+                    System.out.println("Escolha a empresa para cadastrar empregados:");
+                    for (int i = 0; i < contadorEmpresa; i++) {
+                        if (empresas[i] != null) {
+                            System.out.println((i + 1) + " - " + empresas[i].getRazao());
+                        }
+                    }
+
+                    int empresaEscolhida = sc.nextInt() - 1;
+                    sc.nextLine();
+
+                    System.out.println("Quantos empregados deseja cadastrar?");
+                    int qtdEmpregados = sc.nextInt();
+                    sc.nextLine();
+
+                    for (int i = 0; i < qtdEmpregados; i++) {
+                        System.out.println("Nome do empregado:");
+                        String nomeEmpregado = sc.nextLine();
+                        System.out.println("Matrícula:");
+                        int matriculaEmpregado = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Endereço do empregado:");
+                        System.out.println("Rua:");
+                        String rua = sc.nextLine();
+                        System.out.println("Bairro:");
+                        String bairro = sc.nextLine();
+                        System.out.println("Complemento:");
+                        String complemento = sc.nextLine();
+                        System.out.println("Número:");
+                        int numero = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println("Cidade:");
+                        String cidade = sc.nextLine();
+                        System.out.println("Estado:");
+                        String estado = sc.nextLine();
+
+                        Endereco enderecoEmpregado = new Endereco(rua, bairro, complemento, cidade, estado, numero);
+                        empregados[contadorEmpregado] = new Empregado(nomeEmpregado, matriculaEmpregado, enderecoEmpregado, empresas[empresaEscolhida]);
+                        contadorEmpregado++;
+                    }
+                    System.out.println("Empregados cadastrados com sucesso!");
+                    break;
+
+                case 3:
+                    System.out.println("Empresas cadastradas:");
+                    for (int i = 0; i < contadorEmpresa; i++) {
+                        if (empresas[i] != null) {
+                            System.out.println((i + 1) + " - " + empresas[i]);
+                        }
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Empregados cadastrados:");
+                    for (int i = 0; i < contadorEmpregado; i++) {
+                        if (empregados[i] != null) {
+                            System.out.println((i + 1) + " - " + empregados[i]);
+                        }
+                    }
+                    break;
+
+                case 5:
+                    loop = false;
+                    break;
+
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+
+        sc.close();
+    }
+}
