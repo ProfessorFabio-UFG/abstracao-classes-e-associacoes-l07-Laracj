@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Cliente[] cliente = new Cliente[5];
+
+        cliente[0] = new Cliente("Lara Cortes", "123456789", new Endereco("Rua 455", "Setor Bueno", "Apt 1101", "Brasilia", "DF", 64));
+        cliente[1] = new Cliente("Isadora Pereira", "987654321", new Endereco("Avenida 02", "Setor Bueno", "Bloco 2 Apt 1702", "Goiania", "GO", 101));
+        cliente[2] = new Cliente("Bruno Guimaraes", "987654321", new Endereco("Avenida 85", "Setor Marista", "Casa 356", "Roraima", "RO", 88));
+        cliente[3] = new Cliente("Leonardo Oliveira", "123456789", new Endereco("Avenida 01", "Bairro Feliz", "Casa 808", "Goiania", "GO", 54));
+
+        int cont = 4;
+        boolean loop = true;
+
+        while (loop) {
+
+            System.out.println("\nDigite a opcao que deseja:" +
+                    "\n(1) Cadastrar um Cliente" +
+                    "\n(2) Ver cadastro do Cliente" +
+                    "\n(3) Sair");
+
+            int op = sc.nextInt();
+            sc.nextLine();
+
+            switch (op) {
+                case 1:
+                    System.out.println("Cadastro de Cliente");
+                    System.out.println("Nome: ");
+                    String nome = sc.nextLine();
+                    System.out.println("CPF: ");
+                    String cpf = sc.nextLine();
+                    System.out.println("Rua: ");
+                    String rua = sc.nextLine();
+                    System.out.println("Bairro: ");
+                    String bairro = sc.nextLine();
+                    System.out.println("Complemento: ");
+                    String comp = sc.nextLine();
+                    System.out.println("Numero: ");
+                    int num = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Cidade: ");
+                    String cidade = sc.nextLine();
+                    System.out.println("Estado: ");
+                    String estado = sc.nextLine();
+
+                    cliente[cont] = new Cliente(nome, cpf, new Endereco(rua, bairro, comp, cidade, estado, num));
+                    cont++;
+                    break;
+
+                case 2:
+                    System.out.println("Selecione o cliente:");
+
+                    for (int i = 0; i < cliente.length; i++) {
+                        if (cliente[i] != null) {
+                            System.out.println("(" + (i + 1) + ")" + " " + cliente[i].getNome());
+                        }
+                    }
+
+                    int numC = sc.nextInt();
+                    sc.nextLine();
+
+                    if (numC > 0 && numC <= cliente.length && cliente[numC - 1] != null) {
+                        System.out.println(cliente[numC - 1]);
+                    } else {
+                        System.out.println("Cliente não encontrado.");
+                    }
+                    break;
+
+                case 3:
+                    loop = false;
+                    break;
+            }
+        }
+
+        sc.close();
+    }
+}
